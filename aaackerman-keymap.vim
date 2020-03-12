@@ -29,18 +29,12 @@ syntax on
 
 " Change leader to a comma because the backslash is too far away
 " That means all \x commands turn into ,x
-" The mapleader has to be set before vundle starts loading all 
+" The mapleader has to be set before vundle starts loading all
 " the plugins.
 let mapleader=","
 map <C-e> :NERDTreeToggle<CR>
 map <leader>gb :Gblame<CR>
 
-
-" Requires the plugins turbux and tslime.vim
-let g:turbux_command_rspec = "bin/rspec"
-let g:no_turbux_mappings = 1
-map <leader>r <Plug>SendTestToTmux
-map <leader>s <Plug>SendFocusedTestToTmux
 
 " =============== Vundle Initialization ===============
 " This loads all the plugins specified in ~/.vim/vundles.vim
@@ -48,6 +42,13 @@ map <leader>s <Plug>SendFocusedTestToTmux
 if filereadable(expand("~/.vim/vundles.vim"))
   source ~/.vim/vundles.vim
 endif
+au BufNewFile,BufRead *.vundle set filetype=vim
+
+" ================ RSpec runner Requires Turbux and tslime.vim ==============
+let g:turbux_command_rspec = "bin/rspec"
+let g:no_turbux_mappings = 1
+map <leader>r <Plug>SendTestToTmux
+map <leader>s <Plug>SendFocusedTestToTmux
 
 " ================ Turn Off Swap Files ==============
 
@@ -58,7 +59,7 @@ set nowb
 " ================ Persistent Undo ==================
 " Keep undo history across sessions, by storing in file.
 " Only works all the time.
-if has('persistent_undo') && !isdirectory(expand('~').'/.vim/backups')
+if has('persistent_undo') && isdirectory(expand('~').'/.vim/backups')
   silent !mkdir ~/.vim/backups > /dev/null 2>&1
   set undodir=~/.vim/backups
   set undofile
@@ -108,7 +109,6 @@ set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
 
-"
 " ================ Scrolling ========================
 
 set scrolloff=8         "Start scrolling when we're 8 lines away from margins
